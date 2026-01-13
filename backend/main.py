@@ -1,3 +1,4 @@
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 from backend.models.user import UserProfile
 from backend.risk_engine.risk_calculator import calculate_risk_score, get_risk_type
@@ -5,6 +6,14 @@ from backend.allocation_engine.allocator import allocate_assets
 from backend.return_engine.return_calculator import calculate_expected_return
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # allow all origins (safe for demo)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.post("/recommend")
 def recommend_portfolio(user: UserProfile):

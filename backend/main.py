@@ -1,0 +1,25 @@
+from fastapi import FastAPI
+from backend.models.user import UserProfile
+from backend.risk_engine.risk_calculator import calculate_risk_score, get_risk_type
+from backend.allocation_engine.allocator import allocate_assets
+from backend.return_engine.return_calculator import calculate_expected_return
+
+app = FastAPI()
+
+@app.post("/recommend")
+def recommend_portfolio(user: UserProfile):
+    risk_score = calculate_risk_score(user)
+    risk_type = get_risk_type(risk_score)
+
+    allocation = allocate_assets(risk_type, user.investment_amount)
+    expected_return = calculate_expected_return(
+        allocation,
+        user.investment_years
+    )
+
+    return {
+        "risk_score": risk_score,
+        "risk_type": risk_type,
+        "allocation": allocation,
+        "expected_return": expected_return
+    }

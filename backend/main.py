@@ -1,9 +1,14 @@
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 from backend.models.user import UserProfile
 from backend.risk_engine.risk_calculator import calculate_risk_score, get_risk_type
 from backend.allocation_engine.allocator import allocate_assets
-from backend.return_engine.return_calculator import calculate_expected_return
+from backend.return_engine.return_calculator import (
+    calculate_expected_return,
+    calculate_sip_return,
+    adjust_for_inflation
+)
 
 app = FastAPI()
 app.add_middleware(

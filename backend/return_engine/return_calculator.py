@@ -1,10 +1,9 @@
 def calculate_expected_return(allocation, years):
-    # Average annual returns (assumptions)
     returns = {
-        "equity": 0.12,   # 12%
-        "debt": 0.06,     # 6%
-        "gold": 0.07,     # 7%
-        "cash": 0.03      # 3%
+        "equity": 0.12,
+        "debt": 0.06,
+        "gold": 0.07,
+        "cash": 0.03
     }
 
     total_future_value = 0
@@ -16,6 +15,7 @@ def calculate_expected_return(allocation, years):
 
     return round(total_future_value, 2)
 
+
 def calculate_sip_return(monthly_investment, years, annual_rate):
     months = years * 12
     monthly_rate = annual_rate / 12
@@ -25,8 +25,8 @@ def calculate_sip_return(monthly_investment, years, annual_rate):
         total_value += monthly_investment * ((1 + monthly_rate) ** (months - i))
 
     return round(total_value, 2)
-    
-    def adjust_for_inflation(nominal_return, inflation_rate, years):
+
+
+def adjust_for_inflation(nominal_return, inflation_rate, years):
     real_value = nominal_return / ((1 + inflation_rate) ** years)
     return round(real_value, 2)
-

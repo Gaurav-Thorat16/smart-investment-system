@@ -21,14 +21,29 @@ def recommend_portfolio(user: UserProfile):
     risk_type = get_risk_type(risk_score)
 
     allocation = allocate_assets(risk_type, user.investment_amount)
+
     expected_return = calculate_expected_return(
         allocation,
         user.investment_years
+    )
+
+    sip_return = calculate_sip_return(
+        monthly_investment=user.monthly_income * 0.2,
+        years=user.investment_years,
+        annual_rate=0.12
+    )
+
+    real_return = adjust_for_inflation(
+        nominal_return=expected_return,
+        inflation_rate=0.06,
+        years=user.investment_years
     )
 
     return {
         "risk_score": risk_score,
         "risk_type": risk_type,
         "allocation": allocation,
-        "expected_return": expected_return
+        "expected_return": expected_return,
+        "sip_return": sip_return,
+        "inflation_adjusted_return": real_return
     }
